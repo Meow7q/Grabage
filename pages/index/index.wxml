@@ -1,0 +1,45 @@
+<!--index.wxml-->
+<!-- <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">导航栏</view>
+</cu-custom> -->
+
+<view class="container">
+  <view class="mask"></view>
+  <view class="content">
+    <view class="logo"></view>
+    <view class="opt">
+      <button  class="camera" bindtap="_takePhoto" >
+        <image mode="aspectFit" src="../../images/icon/camera.png"></image>
+        <view class="text">拍照</view>
+      </button>
+      <view class="album" bindtap="_openAlbum">从相册选择</view>
+      <view class="opt-bottom">
+        <view class="item" bindtap="_search">
+          <image mode="aspectFit" src="../../images/icon/search.png"></image>
+          查询
+        </view>
+        <view class="item" bindtap="_lexicon">
+          <image mode="aspectFit" src="../../images/icon/lexicon.png"></image>
+          词库
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="cu-modal {{showModal?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">温馨提示</view>
+    </view>
+    <view class="padding-xl" style="background-color:white">
+      <view class="why-auth-text">
+        <label>为了更好提供服务</label>
+        <label>请在稍后提示框中点击“允许”</label>
+      </view>
+      <image src="../../images/auth-tip.jpg" mode="aspectFit"></image>
+      <button class="cu-btn round bg-green auth-btn"role="button"aria-disabled="false" bindgetuserinfo="_bindgetuserinfo" open-type="getUserInfo">我知道了</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,89 @@
+/* pages/lexicon/lexicon.wxss */
+page{
+  width: 100%;
+  height: 100%;
+}
+.cu-custom .cu-bar{
+  background-color: var(--ghostWhite);
+  /* background-image:url(https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg); */
+}
+.cu-list>.cu-item {
+  transition: all .1s linear 0s;
+  transform: translateX(0rpx);
+}
+
+.cu-list.menu-avatar>.cu-item .action {
+  width: auto;
+  text-align: right;
+  margin-right: 10rpx;
+}
+
+.grey-line{
+  width: 100%;
+  height: 10rpx;
+  background-color: transparent;
+}
+.goTop{
+  width: 80rpx;
+  height: 80rpx;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  right: 20rpx;
+  bottom: 300rpx;
+}
+.contact{
+  width: 80rpx;
+  height: 80rpx;
+  overflow: hidden;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  right: 20rpx;
+  bottom: 200rpx;
+}
+.opt-box{
+  transition: all 0.1s linear 0s;
+}
+.cu-modal {
+  transition: all 0.1s linear 0s;
+}
+.cu-dialog{
+  background-color: #ededed;
+}
+.cu-dialog .option{
+  width: 100%;
+  height: 101rpx;
+}
+.question{
+  height: 140rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rpx;
+}
+.option2{
+  margin-top: 2rpx;
+}
+.option button{
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  font-size: 34rpx;
+}
+ .cancel{
+  height: 118rpx !important;
+  margin-top: 10rpx;
+}
+.apply{
+  margin-top: 10rpx;
+}
+.bg-grey {
+  background-color: var(--grey) !important;
+  color: var(--white) !important;
+}
+

@@ -1,0 +1,100 @@
+/* pages/discern/discern.wxss */
+.cu-custom .cu-bar{
+  /* background-image: linear-gradient(45deg, #39b54a, #4da975); */
+  background-color: #4da975;
+  color: var(--white);
+}
+.container {
+  min-height: 95vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  position: relative;
+} 
+.bg{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  filter: blur(10rpx);
+  z-index: 0;
+}
+.mask{
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  opacity: .5;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+.targetImg{
+  width: 488rpx;
+  height: 488rpx;
+  overflow: hidden;
+  margin-top: 108rpx;
+  border: 4rpx solid #ffffff;
+  z-index: 10;
+}
+.discern-content{
+  width: 658rpx;
+  min-height: 250rpx;
+  padding: 29rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0, .4);
+  margin-top: 83rpx;
+  color: #ffffff;
+  z-index: 10;
+}
+.loading{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loading text{
+  font-size: 40rpx;
+  margin-right: 6rpx;
+}
+.discern-content-detail{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.baidu-discern-rs{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.rs-left image{
+  width: 194rpx;
+  height: 194rpx;
+  border: 2rpx solid #ffffff;
+}
+.rs-right{
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content:space-around;
+}
+
+.rs-cat{
+  width: 658rpx;
+  min-height: 250rpx;
+  padding: 29rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0, .4);
+  margin-top: 83rpx;
+  color: #ffffff;
+  z-index: 10;
+}
+.rs-cat .cat-in-list{
+  width: 100%;
+}
+.cu-list.menu>.cu-item {
+  background-color:   inherit;
+}

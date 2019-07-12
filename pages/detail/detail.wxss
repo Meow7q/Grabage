@@ -1,0 +1,110 @@
+/* pages/detail/detail.wxss */
+page{
+  width: 100%;
+  height: 100%;
+  /* background-color: #ffffff; */
+}
+.line{
+  width: 100%;
+  height: 1rpx;
+  border-bottom: 1rpx solid rgba(0, 0, 0, 0.1);
+}
+.space{
+  width: 100%;
+  background: transparent;
+  height: 100rpx;
+}
+.text-df{
+  font-size: 28rpx;
+  line-height: 40rpx;
+  letter-spacing: 2rpx;
+}
+.trans{
+  color: #ffffff;
+  background-color: transparent;
+}
+.lgreen{
+    color: #ffffff;
+    background-image:linear-gradient(20deg, #4da975, #61ad62);
+}
+.cu-custom .cu-bar{
+  /* color: #ffffff;
+  background-color: transparent; */
+  /* background-color: var(--ghostWhite); */
+  /* background-image:url(https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg); */
+}
+.head{
+  width: 100%;
+  height: 466rpx;
+  background-image:linear-gradient(20deg, #4da975, #61ad62);
+  color: var(--white);
+  position: absolute;
+  top: 0;
+  z-index: -1;
+}
+.head .title{
+  width: 690rpx;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 206rpx;
+}
+.title .head-left{
+  display: flex;
+  flex-direction: column;
+}
+.app-name{
+  font-size: 54rpx;
+}
+.app-slogan{
+  font-size: 24rpx;
+}
+.head-right{
+  width: 210rpx;
+  font-size: 24rpx;
+  color: #4da975;
+  border: solid 1rpx rgba(205, 224, 230, 0.2);
+}
+.content{
+  width: 750rpx;
+  position: absolute;
+  top: 365rpx;
+  padding-bottom: 70rpx;
+  z-index: 2;
+}
+.cat-content{
+  width: 690rpx;
+  color: var(--darkGray);
+  background-color: #ffffff;
+  box-shadow: 0 3rpx 20rpx rgba(27, 27, 27, 0.42);
+  border-radius: 30rpx;
+  margin-left: 30rpx;
+  padding: 30rpx 0 70rpx 0;
+}
+.cat-content .tab{
+  width: 88%;
+  margin: 0 auto;
+}
+.cat-icon-box{
+  justify-content: center;
+}
+.cat-icon{
+  width: 143rpx;
+  border-radius: 18rpx;
+  margin-right: 20rpx;
+}
+.sm-title{
+  width: 200rpx;
+  margin: 0 auto;
+  margin-top: 50rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.sm-title .name{
+  width: 150rpx;
+  text-align: center;
+} 

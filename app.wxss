@@ -1,0 +1,18 @@
+/**app.wxss**/
+@import "colorui/main.wxss";
+@import "colorui/icon.wxss";
+
+button {
+  font-size: 28rpx;
+  background-color: #fff;
+  border: none;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+  box-sizing:content-box;
+}
+button::after {
+  border: none;
+  border-radius: 0;
+}
+

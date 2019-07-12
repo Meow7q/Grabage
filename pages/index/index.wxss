@@ -1,0 +1,126 @@
+/**index.wxss**/
+
+.container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  position: relative;
+  background: url("http://meow7.cn/bg@garbage.jpg");
+  animation: animated 10s linear infinite;
+  background-repeat: no-repeate;
+  background-size: cover;
+} 
+@keyframes animated {
+  0% { background-position-y: 0rpx; }
+  50%{ background-position-y: -200rpx}
+  100%{ background-position-y: 0rpx}
+}
+
+
+.mask{
+  width: 100%;
+  height: 100%;
+  background-color: #4da975;
+  opacity: .95;
+  position: absolute;
+  top: 0;
+}
+.content{
+  width: 100%;
+  height: 100%;
+  margin: 200rpx 0 120rpx 0;
+  z-index: 1;
+  position: relative;
+}
+.content .opt{
+  width: 100%;
+  font-size: 30rpx;
+  letter-spacing: 4rpx;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.opt .camera{
+  width: 176rpx;
+  height: 176rpx;
+  color: #4da975;
+  background-color: #ffffff;
+  border: solid 10rpx rgba(205, 224, 230, 0.5); /*设置边框*/
+  box-shadow: 0 3rpx 20rpx rgba(27, 27, 27, 0.42); /*添加底部阴影*/
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+}
+.opt .camera image{
+  width: 40%;
+  height: 40%;
+}
+.opt .camera .text{
+  width: 100%;
+  margin-top: 5rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.opt .album{
+  color: #ffffff;
+  margin: 54rpx 0 47rpx 0;
+}
+.opt-bottom{
+  color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 60%;
+  margin: 0 auto;
+  height: 170rpx;
+}
+.opt-bottom .item{
+  width: 30%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.opt-bottom image{
+  width: 100%;
+  height: 100%;
+}
+.cu-dialog{
+  width: 600rpx;
+}
+.cu-bar{
+  border-bottom: 1rpx solid var(--ghostWhite);
+}
+.padding-xl{
+  padding: 10rpx 20rpx 50rpx 20rpx;
+}
+.why-auth-text{
+  font-size: 24rpx;
+  color: var(--darkGray);
+  margin-top: 14rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.why-auth-text label{
+  margin-bottom: 7rpx;
+}
+.auth-btn{
+  width: 80%;
+  height: 77rpx;
+  margin: 0 auto;
+  background-color: #4da975;
+}

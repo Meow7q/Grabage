@@ -1,0 +1,62 @@
+<!--pages/add/add.wxml-->
+<cu-custom isBack="{{true}}" >
+	<view slot="backText">返回</view>
+	<view slot="content">新增到词库</view>
+</cu-custom>
+
+<view class="padding bg-white">
+  <view class="padding bg-grey radius"style="width:100%">
+    <view>请填写通俗，易懂，正确的垃圾名称，谢谢。</view>
+  </view>
+</view>
+
+<form>
+	<view class="cu-form-group margin-top">
+		<view class="title">垃圾名称</view>
+		<input placeholder="15个字以内"></input>
+	</view>
+	<view class="cu-form-group margin-top">
+		<view class="title">分类选择</view>
+	</view>
+	<radio-group class="block">
+		<view class="cu-form-group" data-index="1" bindtap="_radioSelect">
+			<view class="title">干垃圾/其他垃圾</view>
+			<view>
+				<radio class="black margin-left-sm" checked="{{radio==1}}"></radio>
+			</view>
+		</view>
+
+    <view class="cu-form-group" data-index="2" bindtap="_radioSelect">
+			<view class="title">湿垃圾/厨余垃圾/易腐垃圾</view>
+			<view>
+				<radio class="brown margin-left-sm" checked="{{radio==2}}"></radio>
+			</view>
+		</view>
+
+     <view class="cu-form-group" data-index="3" bindtap="_radioSelect">
+			<view class="title">有害垃圾</view>
+			<view>
+				<radio class="red margin-left-sm" checked="{{radio==3}}"></radio>
+			</view>
+		</view>
+
+    <view class="cu-form-group" data-index="4" bindtap="_radioSelect">
+			<view class="title">可回收物</view>
+			<view>
+				<radio  class="blue margin-left-sm" checked="{{radio==4}}"></radio>
+			</view>
+		</view>
+
+    <view class="cu-form-group" data-index="5" bindtap="_radioSelect">
+			<view class="title">不知道</view>
+			<view>
+				<radio  class="grey margin-left-sm" checked="{{radio==5}}"></radio>
+			</view>
+		</view>
+	</radio-group>
+
+  <button form-type="submit" class="cu-btn block bg-blue margin-tb-sm lg sub-btn"role="button"aria-disabled="false">
+    <text class="cuIcon-loading2 iconfont-spin"></text>
+    <text>提交</text>
+  </button>
+</form>

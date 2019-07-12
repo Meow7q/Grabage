@@ -1,0 +1,90 @@
+<!--pages/discern/discern.wxml-->
+<cu-custom isBack="{{true}}" >
+	<view slot="backText">返回</view>
+	<view slot="content">识别结果</view>
+</cu-custom>
+
+<view class="container">
+  <image mode="aspectFill" class="bg" src="{{imgPath}}"></image>
+  <view class="mask"></view>
+  <image class="targetImg" mode="aspectFill" src="{{imgPath}}"></image>
+  <view class="discern-content">
+    <!-- loading -->
+    <view class="loading" wx:if="{{loading_1}}">
+      <text class="cuIcon-loading2 iconfont-spin"></text>
+      识别中...
+    </view>
+    
+    <!--  -->
+    <view wx:if="{{!loading_1}}" class="discern-content-detail">
+      <!--百度识图结果-->
+      <view class="baidu-discern-rs">
+        <view class="rs-left">
+         <image src="{{discernRes.baike_info.image_url}}" mode="aspectFill"></image>
+        </view>
+        <view class="rs-right">
+          <text>{{discernRes.root}}</text>
+          <text class="" style="font-size: 50rpx;">{{discernRes.keyword}}</text>
+          <text style="font-size:24rpx;font-weight:300;">可信度{{discernRes.score*100}}%</text>
+        </view> 
+      </view>
+    </view>
+
+  </view>
+
+   <!-- 根据百度返回结果查询所属分类的返回结果列表 -->
+    <view class="rs-cat">
+      <view class="loading">
+        <text class="cuIcon-loading2 iconfont-spin"></text>
+         搜索中...
+      </view>
+
+      <view class="cat-in-list cu-list menu" wx:if="{{false}}">
+        <view class="cu-item">
+          <view class="content">
+            <text class="">尿布</text>
+          </view>
+          <view class="action">
+            <view class="cu-tag bg-black">干垃圾</view>
+          </view>
+        </view>
+
+        <view class="cu-item">
+          <view class="content">
+            <text class="">卫生巾</text>
+          </view>
+          <view class="action">
+            <view class="cu-tag bg-brown">湿垃圾</view>
+          </view>
+        </view>
+
+        <view class="cu-item">
+          <view class="content">
+            <text class="">袜子</text>
+          </view>
+          <view class="action">
+            <view class="cu-tag bg-red">有害垃圾</view>
+          </view>
+        </view>
+
+        <view class="cu-item">
+          <view class="content">
+            <text class="">飞机</text>
+          </view>
+          <view class="action">
+            <view class="cu-tag bg-blue">可回收垃圾</view>
+          </view>
+        </view>
+
+        <view class="cu-item">
+          <view class="content">
+            <text class="">避孕套</text>
+          </view>
+          <view class="action">
+            <view class="cu-tag bg-white">非日常生活垃圾</view>
+          </view>
+        </view>
+      </view> 
+    </view>
+
+</view>

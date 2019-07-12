@@ -1,0 +1,160 @@
+<!--pages/search/search.wxml-->
+<cu-custom isBack="{{true}}" >
+	<view slot="backText">返回</view>
+	<view slot="content">搜索</view>
+</cu-custom>
+
+<view class="container">
+  <view class="cu-bar search bg-white">
+    <view class="search-form round">
+      <text class="cuIcon-search"></text>
+      <input type="text" value="{{searchKeyWord}}" focus="true" placeholder="输入搜索关键字" confirm-type="search" bindconfirm="_search" bindinput="_getKeyWrod"></input>
+    </view>
+    <view class="action">
+      <button wx:if="{{!haveSearched}}" disabled="{{!searchKeyWord}}" aria-disabled="false" class="cu-btn bg-green shadow-blur round" bindtap="_search">搜索</button>
+
+      <button wx:if="{{haveSearched}}"  aria-disabled="false" class="cu-btn bg-grey shadow-blur round" bindtap="_clean">清除</button>
+    </view>
+  </view>
+
+  <!-- 历史记录和今日排行 -->
+  <view wx:if="{{!haveSearched}}" class="history_rank">
+   <view class="title1 padding">今日热门搜索</view>
+    
+    <view class="cu-list menu">
+      <view class="cu-item">
+        <view class="content">
+          <text class="text-orange num bold">1</text>
+          <text class="">尿布</text>
+          <text class="search-times text-grey">456347</text>
+        </view>
+        <view class="action">
+          <view class="cu-tag bg-black">干垃圾</view>
+        </view>
+      </view>
+
+      <view class="cu-item">
+        <view class="content">
+          <text class="text-orange num bold">2</text>
+          <text class="">卫生巾</text>
+          <text class="search-times text-grey">234556</text>
+        </view>
+        <view class="action">
+          <view class="cu-tag bg-brown">湿垃圾</view>
+        </view>
+      </view>
+
+      <view class="cu-item">
+        <view class="content">
+          <text class="text-orange num bold">3</text>
+          <text class="">袜子</text>
+          <text class="search-times text-grey">234135</text>
+        </view>
+        <view class="action">
+          <view class="cu-tag bg-red">有害垃圾</view>
+        </view>
+      </view>
+
+      <view class="cu-item">
+        <view class="content">
+        <text class="text-orange num">4</text>
+          <text class="">飞机</text>
+          <text class="search-times text-grey">134135</text>
+        </view>
+        <view class="action">
+          <view class="cu-tag bg-blue">可回收垃圾</view>
+        </view>
+      </view>
+
+      <view class="cu-item">
+        <view class="content">
+        <text class="text-orange num">5</text>
+          <text class="">避孕套</text>
+          <text class="search-times text-grey">2335</text>
+        </view>
+        <view class="action">
+          <view class="cu-tag">非日常生活垃圾</view>
+        </view>
+      </view>
+    </view> 
+ 
+   <view class="title1 padding">历史搜索记录</view>
+   <view class="padding-sm flex flex-wrap">
+      <view wx:for="{{histories}}" class="padding-xs">
+        <view class="cu-tag line-gray">{{item}}</view>
+      </view>   
+   </view>
+
+  <!-- 清空搜索历史记录按钮 -->
+  <button wx:if="{{searchHistories.length>10}}" class="cu-btn line-grey clean-btn"role="button"aria-disabled="false">
+    <text class="cuIcon-delete"></text>
+      清空搜索历史
+  </button>
+
+  </view>
+
+  <!-- 搜索结果页面 -->
+  <view wx:if="{{haveSearched}}" class="search-rs">
+    <view wx:if="{{loading}}"  class="loading">
+      <text class="cuIcon-loading2 iconfont-spin"></text>
+      搜索中...
+    </view>
+
+    <!-- 搜索结果为空，引导至词库页面 -->
+    <view wx:if="{{!searchRs}}" class="no-searchRs">
+      <view class="padding no-searchRs-tip">哎呀，没有找到结果</view>
+      <button class="cu-btn bg-blue shadow-blur">
+        点我一起完善词库吧!  (ง •_•)ง 
+      </button>
+    </view>
+  
+    <!-- 搜索结果不为空，循环输出 -->
+    <view wx:if="{{searchRs}}" class="cu-list menu">
+      <view class="cu-item">
+        <view class="content">
+          <text class="">尿布</text>
+        </view>
+        <view class="action">
+          <view class="cu-tag bg-black">干垃圾</view>
+        </view>
+      </view>
+
+      <view class="cu-item">
+        <view class="content">
+          <text class="">卫生巾</text>
+        </view>
+        <view class="action">
+          <view class="cu-tag bg-brown">湿垃圾</view>
+        </view>
+      </view>
+
+      <view class="cu-item">
+        <view class="content">
+          <text class="">袜子</text>
+        </view>
+        <view class="action">
+          <view class="cu-tag bg-red">有害垃圾</view>
+        </view>
+      </view>
+
+      <view class="cu-item">
+        <view class="content">
+          <text class="">飞机</text>
+        </view>
+        <view class="action">
+          <view class="cu-tag bg-blue">可回收垃圾</view>
+        </view>
+      </view>
+
+      <view class="cu-item">
+        <view class="content">
+          <text class="">避孕套</text>
+        </view>
+        <view class="action">
+          <view class="cu-tag">非日常生活垃圾</view>
+        </view>
+      </view>
+
+    </view> 
+  </view>
+</view>

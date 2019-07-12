@@ -1,0 +1,118 @@
+<!--pages/lexicon/lexicon.wxml-->
+<cu-custom isBack="{{true}}" >
+	<view slot="backText">返回</view>
+	<view slot="content">待入库列表</view>
+</cu-custom>
+
+<view class="container">
+  <view class="padding bg-white">
+    <view class="padding bg-grey radius"style="width:100%">
+      <view style="margin-bottom:17rpx;">如何才能加入词库？ <text style="font-size:20rpx">(成功加入词库即可通过搜索展示出来)</text>  </view>
+      <view>1.当认同数比反对数大10</view>
+      <view>2.当选择某个选项的人数大于20</view>
+    </view>
+  </view>
+  
+  <!-- <view class="grey-line"></view> -->
+
+  <view class="cu-list menu-avatar">
+    <!--
+      type: 1, 2 (1是判断型，2是询问型)
+      当type=1时，type_info所存的值表示判断该“name”是否属于type_info.name的垃圾
+      当type=2时，表示询问“name”属于哪一类垃圾
+     -->
+
+
+    <view wx:for="{{list}}" wx:key="{{key}}" class="cu-item" hover-class="bg-grey" bindtap="_selectOrJudge" data-index="{{index}}">
+      <view class="cu-avatar radius lg" style="background-image:url({{item.headimgurl}});"></view>
+      <view class="content">
+        <view class="text-pink">
+          <text class="text-cut text-pink">{{item.name}}</text>
+          <!-- <view class="cu-tag round bg-blue sm">判断</view> -->
+        </view>
+        <view class="text-gray text-sm flex">
+          <text wx:if="{{item.type==1}}" class="text-cut">是{{item.type_info.name}}吗?</text>
+          <text wx:if="{{item.type==2}}" class="text-cut">属于哪一类垃圾?</text>
+        </view>
+      </view>
+      <view class="action">
+        <view class="cu-tag round bg-red sm">55人</view>
+        <view wx:if="{{item.type==1}}" class="text-grey text-xs">同意</view>
+        <view wx:if="{{item.type==2}}" class="text-grey text-xs">认为是{{item.type_info}}</view>
+      </view>
+    </view>
+  
+
+    <!-- 加载指示 -->
+    <view class="cu-load text-grey bg-white loading"></view>
+  </view>
+</view>
+
+<!-- 右侧操作导航 -->
+<view class="opt-box">
+    <view class="goTop round bg-white text-black shadow"  hidden='{{!floorstatus}}' bindtap="_goTop">
+       <text class="cuIcon-top lg "></text>
+    </view>
+
+    <button class="contact round bg-white text-black cu-btn content shadow"open-type="contact"role="button"aria-disabled="false">
+       <text class="cuIcon-message lg "></text>
+    </button>
+
+</view>
+
+<!-- 底部Model窗口 -->
+<view bindtap="_hideModal" class="cu-modal bottom-modal wx:if='{{modelShow?'show':''}}' " >
+  <view class="cu-dialog" catchtap>
+      <!-- 场景1 -->
+      <view class="scene1" wx:if="{{info.type==1}}">
+        
+        <view class="bg-white question">“{{info.name}}”是【{{info.type_info.name}}】吗?</view>
+
+        <view class="option">
+          <button bindtap="_optionSelect" hover-class="bg-grey"  data-option="true"  class="cu-btn  bg-white text-green"role="button"aria-disabled="false">同意({{info.agree}}人)</button>
+        </view>
+        <view class="option option2">
+          <button bindtap="_optionSelect" hover-class="bg-grey"  data-option="false" class="cu-btn  bg-white text-red"role="button"aria-disabled="false">反对({{info.against}}人)</button>
+        </view>
+
+         <view class="option apply">
+          <button open-type="share" hover-class="bg-grey"  class="cu-btn  bg-green text-white"role="button"aria-disabled="false">邀请好友回答</button>
+        </view>
+
+        <view class="option cancel">
+          <button bindtap="_hideModal" hover-class="bg-grey"   class="cu-btn  bg-white text-black"role="button"aria-disabled="false">取消</button>
+        </view>
+      </view>
+
+      <!-- 场景2 -->
+      <view class="scene2" wx:if="{{info.type==2}}">
+       
+       <view class="bg-white question">“{{info.name}}”属于哪类垃圾？</view>
+
+       <view class="option">
+          <button bindtap="_optionSelect" hover-class="bg-grey"  data-option="1" class="cu-btn  bg-white text-black"role="button"aria-disabled="false">干垃圾/其他垃圾({{info.garbage1}}人)</button>
+        </view>
+         <view class="option option2">
+          <button bindtap="_optionSelect" hover-class="bg-grey"  data-option="2" class="cu-btn  bg-white text-brown"role="button"aria-disabled="false">湿垃圾/易腐垃圾/厨余垃圾({{info.garbage2}}人)</button>
+        </view>
+        <view class="option option2">
+          <button bindtap="_optionSelect" hover-class="bg-grey"  data-option="3" class="cu-btn  bg-white text-red"role="button"aria-disabled="false">有害垃圾({{info.garbage3}}人)</button>
+        </view>
+        <view class="option option2">
+          <button bindtap="_optionSelect" hover-class="bg-grey"  data-option="4" class="cu-btn  bg-white text-blue"role="button"aria-disabled="false">可回收垃圾({{info.garbage4}}人)</button>
+        </view>
+        <view class="option option2">
+          <button bindtap="_optionSelect" hover-class="bg-grey"  data-option="5" class="cu-btn  bg-white text-grey"role="button"aria-disabled="false">非日常生活垃圾({{info.garbage5}}人)</button>
+        </view>
+
+
+        <view class="option apply">
+          <button open-type="share" hover-class="bg-grey"  class="cu-btn  bg-green text-white"role="button"aria-disabled="false">邀请好友回答</button>
+        </view>
+
+        <view class="option cancel">
+          <button bindtap="_hideModal" hover-class="bg-grey"  class="cu-btn  bg-white text-black"role="button"aria-disabled="false">取消</button>
+        </view>
+      </view>
+  </view>
+</view>

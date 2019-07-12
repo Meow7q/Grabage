@@ -1,0 +1,14 @@
+/* pages/add/add.wxss */
+page{
+  width: 100%;
+  height: 100%;
+}
+.cu-custom .cu-bar{
+  background-color: var(--ghostWhite);
+  /* background-image:url(https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg); */
+}
+.sub-btn{
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 20rpx;
+}

@@ -1,0 +1,59 @@
+/* pages/search/search.wxss */
+.cu-custom .cu-bar{
+  background-color: var(--ghostWhite);
+  /* background-image:url(https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg); */
+}
+.container{
+  width: 100%;
+  min-height: 90vh;
+  font-size: 26rpx;
+  background-color: #ffffff;
+}
+.title1{
+  font-size: 28rpx;
+  color: var(--black);
+  padding-bottom: 0rpx;
+}
+.cu-list.menu>.cu-item .content {
+  font-size: 26rpx;
+  color: var(--darkGray);
+}
+.search-times{
+  font-size: 22rpx;
+  margin-left: 17rpx;
+}
+.num{
+  margin-right: 37rpx;
+}
+.bold{
+  font-weight: 700;
+}
+.clean-btn{
+  font-size: 26rpx;
+  width: 50%;
+  margin-left: 25%;
+}
+.loading{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 170rpx;
+}
+.no-searchRs{
+  width: 100%;
+  margin-top: 170rpx;
+  font-size: 24rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.no-searchRs-tip{
+  text-align: center;
+}
+.no-rs-btn{
+  width: 80%;
+  font-size: 24rpx;
+  margin: 0 auto;
+  margin-left: 10%;
+}
