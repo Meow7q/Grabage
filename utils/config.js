@@ -5,6 +5,6 @@ class config{
 }
 
 //服务器地址
-config.requestUrl = '';
+config.requestUrl = 'https://garbage.meow7.cn/api/';
 
 export {config}
