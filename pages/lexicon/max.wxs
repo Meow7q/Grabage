@@ -1,0 +1,16 @@
+//获取最大值
+var getMax = function (list) {
+  var votes_arr = [];
+  var max = {category_name:'',votes:0};
+  for(var i=0; i<list.length; i++){
+      if(list[i].votes>=max.votes){
+        max = list[i];
+      }
+  }
+  return max;
+}
+
+
+module.exports = {
+  getMax: getMax,
+};

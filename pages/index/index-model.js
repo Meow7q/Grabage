@@ -18,8 +18,24 @@ class indexModel extends base{
   getBdtoken(callBack){
     var params = {
       'url': 'bd_token',
+      'method': 'POST',
       'callBack': function (res) {
        callBack && callBack(res);
+      }
+    }
+    this._request(params);
+  }
+
+  /**
+   * 更新用户信息
+   */
+  updateUserinfo(userinfo, callBack){
+    var params = {
+      'url': 'user',
+      'method': 'POST',
+      'data':userinfo, 
+      'callBack': function (res) {
+        callBack && callBack(res);
       }
     }
     this._request(params);

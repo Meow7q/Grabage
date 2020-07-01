@@ -6,7 +6,7 @@ class base {
     this.requestUrl = config.requestUrl;
   }
 
-  _request(params, noRefetch) {
+  _request(params) {
     var that = this;
     params.method = params.method ? params.method : 'GET';
     wx.request({
@@ -14,8 +14,9 @@ class base {
       method: params.method,
       data: params.data,
       header: {
+        'Accept': 'application/json',
         'content-type': 'application/json',
-        'Authorization': 'Bearer ' + token
+        'Authorization': 'Bearer ' + wx.getStorageSync('token')
       },
       success: function (res) {
         var code = res.statusCode.toString();
@@ -24,9 +25,7 @@ class base {
           params.callBack && params.callBack(res.data);
         } else {
           if (code == '401') {
-            if (!noRefetch) {
               that._refetch(params);
-            }
           } else if (code == '400') {
             wx.showToast({
               title: res.data.msg,
@@ -38,9 +37,7 @@ class base {
               icon: 'none'
             })
           }
-          if (noRefetch) {
-            params.ecallBack && params.ecallBack(res.data);
-          }
+         params.ecallBack && params.ecallBack(res.data);  
         }
       },
       fail: function (error) {
@@ -51,7 +48,7 @@ class base {
 
   _refetch(params) {
     token.getTokenFromServer((res) => {
-      this._request(params, true);
+      this._request(params);
     });
   }
 }

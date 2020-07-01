@@ -1,5 +1,5 @@
 <!--pages/detail/detail.wxml-->
-<cu-custom bgColor="{{isScroll?'lgreen':'trans'}}" isBack="{{true}}">
+<cu-custom bgColor="{{isScroll?'lgreen':'trans'}}" isCustom="{{true}}">
 	<view slot="backText"></view>
 	<view slot="content">{{isScroll?'AI垃圾分类':''}}</view>
 </cu-custom>
@@ -11,16 +11,18 @@
     <text class="app-slogan">一拍即查免烦恼，从我做起爱环保</text>
    </view>
    
-   <button open-type="share" class="head-right cu-btn block bg-white shadow round" >
+   <button  class="head-right cu-btn block bg-white shadow round" open-type="share" role="button" >
     <text class="cuIcon-forwardfill" style="margin-right:9rpx;"></text>
     分享好友
    </button>
+   
  </view>
 </view>
 
 <view class="content">
   <view class="cat-content">
-    <view class="tab flex-sub text-center margin-top margin-bottom" wx:if="{{TabCur==1}}">
+
+    <view class="tab flex-sub text-center margin-top margin-bottom" wx:if="{{TabCur==4}}">
       <text class="text-xxl text-black text-bold">干垃圾／其他垃圾</text>
       
       <view class="cat-icon-box flex-column cu-bar bg-white margin-top">
@@ -57,7 +59,7 @@
 
     </view>
 
-    <view class="tab flex-sub text-center margin-top margin-bottom" wx:if="{{TabCur==2}}">
+    <view class="tab flex-sub text-center margin-top margin-bottom" wx:if="{{TabCur==3}}">
       <text class="text-xxl text-black text-bold">湿垃圾／厨余垃圾／易腐垃圾</text>
       
       <view class="cat-icon-box flex-column cu-bar bg-white margin-top">
@@ -93,7 +95,7 @@
 
     </view>
 
-    <view class="tab flex-sub text-center margin-top margin-bottom" wx:if="{{TabCur==3}}">
+    <view class="tab flex-sub text-center margin-top margin-bottom" wx:if="{{TabCur==2}}">
         <text class="text-xxl text-black text-bold">有害垃圾</text>
         
         <view class="cat-icon-box flex-column cu-bar bg-white margin-top">
@@ -113,7 +115,7 @@
         </view>
 
         <view class="flex-sub text-left margin-top ">
-          <view class="text-df">单独投放至社区专门的干垃圾桶中，最终由城市垃圾末端处理系统处理，例如填埋或者焚烧</view>
+          <view class="text-df">单独投放至社区专门的有害垃圾桶中</view>
         </view>
 
         <view class="action margin-top sm-title">
@@ -123,24 +125,22 @@
         </view>
 
         <view class="flex-sub text-left margin-top ">
-          <view class="text-df">护肤，化妆，洗涤用的瓶子，牙刷牙膏皮牙线控枪类等废弃物，因目前回收处理体系覆盖范围有限，暂时可以归来在“干垃圾”下。如所在地区有回收企业对其进行回收，可作为可回收物处理。</view>
+          <view class="text-df">在有专门品类回收箱的地区，请按具体分类投放。如日光灯管，节能灯管放入灯管回收箱；过期药品放入专门药品回收箱；废旧电池放入电池回收箱等，请特别关注纽扣类电池和蓄电池的分类回收。</view>
         </view>
-
-      </view>
     </view> 
 
-    <view class="tab flex-sub text-center margin-top margin-bottom" wx:if="{{TabCur==4}}">
+    <view class="tab flex-sub text-center margin-top margin-bottom" wx:if="{{TabCur==1}}">
       <text class="text-xxl text-black text-bold">可回收物</text>
       
       <view class="cat-icon-box flex-column cu-bar bg-white margin-top">
-        <image class="cat-icon" mode="widthFix" src="../../images/cat/ico-1.jpg"></image>
-        <image class="cat-icon" mode="widthFix" src="../../images/cat/1.jpg"></image>
+        <image class="cat-icon" mode="widthFix" src="../../images/cat/ico-4.jpg"></image>
+        <image class="cat-icon" mode="widthFix" src="../../images/cat/4.jpg"></image>
       </view>
 
-      <view class="text-df text-left margin-top">主要包括砖瓦陶瓷渣土，卫生间废纸，纸尿裤，脏污的塑料袋，破旧不具回收价值的其他物品。</view>
+      <view class="text-df text-left margin-top">即回收后经过加工可再次利用。主要包括废纸张，废塑料，废金属，废玻璃，废家具，废织物，旧电器，旧手机等适宜回收，可循环利用的废弃物，通过综合处理回收利用，可以减少污染，节省资源。</view>
 
       <view class="line margin-top margin-bottom"></view>
-      <image src="../../images/cat/c1.jpg" mode="widthFix"></image>
+      <image src="../../images/cat/c4.jpg" mode="widthFix"></image>
 
       <view class="action margin-top sm-title">
           <text class="cuIcon-title text-black"></text>
@@ -149,7 +149,7 @@
       </view>
 
       <view class="flex-sub text-left margin-top ">
-        <view class="text-df">单独投放至社区专门的干垃圾桶中，最终由城市垃圾末端处理系统处理，例如填埋或者焚烧</view>
+        <view class="text-df">尽量保持清洁，牛奶盒，玻璃瓶，塑料瓶，食品塑料托盘等可以简单清晰沥干，并压扁。投放时可按照材质分别打包，单独投放至社区专门的可回收物桶中。</view>
       </view>
 
       <view class="action margin-top sm-title">
@@ -159,11 +159,12 @@
       </view>
 
       <view class="flex-sub text-left margin-top ">
-        <view class="text-df">护肤，化妆，洗涤用的瓶子，牙刷牙膏皮牙线控枪类等废弃物，因目前回收处理体系覆盖范围有限，暂时可以归来在“干垃圾”下。如所在地区有回收企业对其进行回收，可作为可回收物处理。</view>
+        <view class="text-df">电子废弃物是典型的可回收物，但部分原件含少量的有害物质，如有条件可交有专门资质的电子废弃物回收处理企业；油污的食品包装袋，泡过面的方便面碗等被严重污染的物品，请投入其他垃圾桶；如有锐利的边缘或尖刺等，请进行包裹。</view>
       </view>
 
-    </view>   
+    </view>
 
+  </view>  
 </view>
 
 

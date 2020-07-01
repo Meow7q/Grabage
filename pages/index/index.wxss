@@ -9,7 +9,7 @@
   justify-content: space-between;
   box-sizing: border-box;
   position: relative;
-  background: url("http://meow7.cn/bg@garbage.jpg");
+  background: url("https://garbage.meow7.cn/upload/img/bg.jpg");
   animation: animated 10s linear infinite;
   background-repeat: no-repeate;
   background-size: cover;
@@ -20,6 +20,18 @@
   100%{ background-position-y: 0rpx}
 }
 
+.logo{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0%;
+}
+.logo image{
+  width: 350rpx;
+  height: 350rpx;
+}
 
 .mask{
   width: 100%;

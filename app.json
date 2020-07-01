@@ -6,7 +6,8 @@
     "pages/lexicon/lexicon",
     "pages/discern/discern",
     "pages/add/add",
-    "pages/detail/detail"
+    "pages/detail/detail",
+    "pages/answer/answer"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -1,5 +1,5 @@
 <!--pages/discern/discern.wxml-->
-<cu-custom isBack="{{true}}" >
+<cu-custom isCustom="{{true}}" >
 	<view slot="backText">返回</view>
 	<view slot="content">识别结果</view>
 </cu-custom>
@@ -20,71 +20,54 @@
       <!--百度识图结果-->
       <view class="baidu-discern-rs">
         <view class="rs-left">
-         <image src="{{discernRes.baike_info.image_url}}" mode="aspectFill"></image>
+         <image src="{{discernRes.baike_info.image_url?discernRes.baike_info.image_url:imgPath}}" mode="aspectFill"></image>
         </view>
         <view class="rs-right">
           <text>{{discernRes.root}}</text>
-          <text class="" style="font-size: 50rpx;">{{discernRes.keyword}}</text>
-          <text style="font-size:24rpx;font-weight:300;">可信度{{discernRes.score*100}}%</text>
+          <text class="keyword" style="">{{discernRes.keyword}}</text>
+          <text class="score" >可信度{{discernRes.score}}%</text>
+
+          <button class="cu-btn share-btn" open-type="share">
+            <text class="cuIcon-share"></text>
+          </button>
         </view> 
       </view>
+
+      <view class="goSearchPage" bindtap="_goSearchPage">识别不对点我查询</view>
     </view>
 
   </view>
 
    <!-- 根据百度返回结果查询所属分类的返回结果列表 -->
     <view class="rs-cat">
-      <view class="loading">
+      <view class="loading" wx:if="{{loading_2}}">
         <text class="cuIcon-loading2 iconfont-spin"></text>
          搜索中...
       </view>
 
-      <view class="cat-in-list cu-list menu" wx:if="{{false}}">
-        <view class="cu-item">
+      <!-- 搜索结果 -->
+      <view class="cat-in-list cu-list menu"  wx:if="{{!loading_2}}">
+
+        <view class="cu-item" wx:for="{{searchRs}}" wx:key="{{key}}" data-category="{{item.category_id}}" bindtap="_getDetail">
           <view class="content">
-            <text class="">尿布</text>
+            <text class="">{{item.name}}</text>
           </view>
           <view class="action">
-            <view class="cu-tag bg-black">干垃圾</view>
+              <view class="cu-tag {{item.category_id==1?'bg-blue':(item.category_id==2?'bg-red':(item.category_id==3?'bg-brown':(item.category_id==4?'bg-black':'')))}}">{{item.category_name}}</view>
           </view>
         </view>
 
-        <view class="cu-item">
-          <view class="content">
-            <text class="">卫生巾</text>
-          </view>
-          <view class="action">
-            <view class="cu-tag bg-brown">湿垃圾</view>
-          </view>
+        <view class="not-found" wx:if="{{searchRs.length<=0}}">
+          <view class="tips-1">词库暂未收录“{{discernRes.keyword}}”，添加到词库帮助更多的人。</view>
+           <button class="cu-btn addBtn" data-keyword="{{discernRes.keyword}}" bindtap="_add">
+              添加到词库！  (ง •_•)ง 
+           </button>
         </view>
 
-        <view class="cu-item">
-          <view class="content">
-            <text class="">袜子</text>
-          </view>
-          <view class="action">
-            <view class="cu-tag bg-red">有害垃圾</view>
-          </view>
-        </view>
-
-        <view class="cu-item">
-          <view class="content">
-            <text class="">飞机</text>
-          </view>
-          <view class="action">
-            <view class="cu-tag bg-blue">可回收垃圾</view>
-          </view>
-        </view>
-
-        <view class="cu-item">
-          <view class="content">
-            <text class="">避孕套</text>
-          </view>
-          <view class="action">
-            <view class="cu-tag bg-white">非日常生活垃圾</view>
-          </view>
-        </view>
       </view> 
+
+
+
     </view>
 
 </view>

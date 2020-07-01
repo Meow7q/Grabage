@@ -1,18 +1,25 @@
 // pages/search/search.js
+import { searchModel } from 'search-model.js';
+var searchM = new searchModel(); 
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    //是否搜索了
+    //是否点击了搜索按钮
     haveSearched: false,
+    //是否搜索结束
+    havesearchEnd: false,
     //搜索结果
-    searchRs:[],
+    searchRs: [],
+    //热门搜索列表
+    popularList: [],
     //搜索关键词
     searchKeyWord: '',
     //搜索历史记录
-    searchHistories: [],
+    histories: [],
     loading: false,
   },
 
@@ -20,8 +27,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this._initData();
+    this._popularList();
     this._searchHistoryManager();
+    this._initData();
   },
 
   /**
@@ -70,7 +78,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+  
   },
 
   /** 
@@ -80,7 +88,9 @@ Page({
     this.setData({
       searchKeyWord: this.data.searchKeyWord,
       haveSearched: this.data.haveSearched,
-      searchRs: this.data.searchRs
+      havesearchEnd: this.data.havesearchEnd,
+      searchRs: this.data.searchRs,
+      popularList: this.data.popularList
     });
   },
 
@@ -98,6 +108,7 @@ Page({
    */
   _searchHistoryManager: function(){
     let histories = wx.getStorageSync('histories') || [];
+    //如果搜索关键词存在，则存入搜索历史
     if (this.data.searchKeyWord) {
       histories.unshift(this.data.searchKeyWord);
       wx.setStorageSync('histories', histories);
@@ -117,18 +128,43 @@ Page({
       return false;
     }
     this._loading(true);
-    var that = this;
+    this.data.haveSearched = true;
+    this.data.havesearchEnd = false;
     this.setData({
-      haveSearched: true
+      havesearchEnd: this.data.havesearchEnd,
+      haveSearched: this.data.haveSearched
     });
-    setTimeout(function(){
+    this._searchHistoryManager();
+
+    var that = this;
+    searchM.search(this.data.searchKeyWord, (res)=>{
       that._loading(false);
-      that._searchHistoryManager();
-      that.data.haveSearched = true;
-      that.data.searchRs = [];
+      that.data.havesearchEnd = true;
+      that.data.searchRs = res.data;
       that._initData();
-    },2000);
+    });
     //加入搜索记录
+  },
+
+  _goSearch: function(e){
+    let word = e.currentTarget.dataset.word;
+    this.data.searchKeyWord = word;
+    this._search();
+  },
+
+  /**
+   * 热门搜索
+   */
+  _popularList: function(){
+    searchM.popularList((res) => {
+        if(res.status){
+          this.data.popularList = res.data;
+          this.setData({
+            popularList: this.data.popularList
+          });
+          return true;
+        }
+    });
   },
 
   //获取搜索框的值
@@ -138,12 +174,37 @@ Page({
   },
 
   /**
-   * 清除
+   * 清空搜索框
    */
   _clean: function(e){
     this.data.searchKeyWord = '';
     this.data.haveSearched = false;
     this.data.searchRs = [];
+    this.data.havesearchEnd = false;
     this._initData();
-  }
+  },
+
+  /**
+   * 清空搜索历史
+   */
+  _cleanHistory: function(){
+    wx.setStorageSync('histories',[])
+    this._searchHistoryManager();
+  },
+
+  /**
+   * 到详情介绍页
+   */
+  _getDetail: function(e){
+    let cat_id = e.currentTarget.dataset.category;
+    wx.navigateTo({
+      url: '../detail/detail?cat='+cat_id,
+    })
+  },
+
+  _add: function () {
+    wx.navigateTo({
+      url: '../add/add?keyword=' + this.data.searchKeyWord,
+    })
+  },
 })

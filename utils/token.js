@@ -6,13 +6,10 @@ class Token {
   }
 
   verify() {
-    console.log('test');
     var token = wx.getStorageSync('token');
     if (!token) {
       this.getTokenFromServer();
-    } else {
-      this.verifyTokenByServer(token);
-    }
+    } 
   }
 
   /**
@@ -22,7 +19,6 @@ class Token {
     var that = this;
     wx.login({
       success: function (res) {
-        console.log(res.code);
         wx.request({
           url: that.getTokenUrl,
           method: 'POST',
@@ -30,8 +26,12 @@ class Token {
             'code': res.code
           },
           success: function (res) {
-            wx.setStorageSync('token', res.data.token);
-            callBack && callBack(res.data.token);
+            if(res.data.status){
+              wx.setStorageSync('share_img_url', res.data.data.share_img_url);
+              wx.setStorageSync('token', res.data.data.token);
+              callBack && callBack(res.data.data.token);
+              return true;
+            }
           }
         })
       }

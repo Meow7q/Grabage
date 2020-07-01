@@ -1,14 +1,17 @@
 <!--pages/lexicon/lexicon.wxml-->
-<cu-custom isBack="{{true}}" >
+<cu-custom isCustom="{{true}}" >
 	<view slot="backText">返回</view>
 	<view slot="content">待入库列表</view>
 </cu-custom>
+
+<wxs src="./max.wxs" module="max" />
+
 
 <view class="container">
   <view class="padding bg-white">
     <view class="padding bg-grey radius"style="width:100%">
       <view style="margin-bottom:17rpx;">如何才能加入词库？ <text style="font-size:20rpx">(成功加入词库即可通过搜索展示出来)</text>  </view>
-      <view>1.当认同数比反对数大10</view>
+      <view>1.当"同意数"比"反对数"大10</view>
       <view>2.当选择某个选项的人数大于20</view>
     </view>
   </view>
@@ -23,7 +26,7 @@
      -->
 
 
-    <view wx:for="{{list}}" wx:key="{{key}}" class="cu-item" hover-class="bg-grey" bindtap="_selectOrJudge" data-index="{{index}}">
+    <view wx:for="{{listdata}}" wx:key="{{key}}" class="cu-item" hover-class="bg-grey" bindtap="_selectOrJudge" data-index="{{index}}">
       <view class="cu-avatar radius lg" style="background-image:url({{item.headimgurl}});"></view>
       <view class="content">
         <view class="text-pink">
@@ -31,20 +34,23 @@
           <!-- <view class="cu-tag round bg-blue sm">判断</view> -->
         </view>
         <view class="text-gray text-sm flex">
-          <text wx:if="{{item.type==1}}" class="text-cut">是{{item.type_info.name}}吗?</text>
+          <text wx:if="{{item.type==1}}" class="text-cut">是{{item.category_votes.category_name}}吗?</text>
           <text wx:if="{{item.type==2}}" class="text-cut">属于哪一类垃圾?</text>
         </view>
       </view>
       <view class="action">
-        <view class="cu-tag round bg-red sm">55人</view>
-        <view wx:if="{{item.type==1}}" class="text-grey text-xs">同意</view>
-        <view wx:if="{{item.type==2}}" class="text-grey text-xs">认为是{{item.type_info}}</view>
+        <view wx:if="{{item.type==1 && item.agree}}" class="cu-tag round bg-red sm">{{item.agree}}人</view>
+        <view wx:if="{{item.type==1 && item.agree}}" class="text-grey text-xs">同意</view>
+
+
+        <view wx:if="{{item.type==2 && max.getMax(item.category_votes).votes}}" class="cu-tag round bg-red sm">{{max.getMax(item.category_votes).votes}}人</view>
+        <view wx:if="{{item.type==2 && max.getMax(item.category_votes).votes}}" class="text-grey text-xs">认为是{{max.getMax(item.category_votes).category_name}}</view>
       </view>
     </view>
   
 
     <!-- 加载指示 -->
-    <view class="cu-load text-grey bg-white loading"></view>
+    <view class="cu-load text-grey bg-white {{getMoreLoading?'loading':'over'}}"></view>
   </view>
 </view>
 
@@ -54,25 +60,26 @@
        <text class="cuIcon-top lg "></text>
     </view>
 
-    <button class="contact round bg-white text-black cu-btn content shadow"open-type="contact"role="button"aria-disabled="false">
-       <text class="cuIcon-message lg "></text>
+    <!-- open-type="contact" -->
+    <button bindtap="_showOptModal" class="contact round bg-white text-black cu-btn cat-btn content shadow" role="button" aria-disabled="false">
+        <image mode="aspectFit" src="../../images/icon/cat.png"></image>
     </button>
 
 </view>
 
 <!-- 底部Model窗口 -->
-<view bindtap="_hideModal" class="cu-modal bottom-modal wx:if='{{modelShow?'show':''}}' " >
+<view bindtap="_hideModal" class="cu-modal bottom-modal wx:if='{{modalShow?'show':''}}' " >
   <view class="cu-dialog" catchtap>
       <!-- 场景1 -->
       <view class="scene1" wx:if="{{info.type==1}}">
         
-        <view class="bg-white question">“{{info.name}}”是【{{info.type_info.name}}】吗?</view>
+        <view class="bg-white question"> <text class="text-black text-bold">“{{info.name}}”</text> 是【{{info.category_votes.category_name}}】吗?</view>
 
         <view class="option">
-          <button bindtap="_optionSelect" hover-class="bg-grey"  data-option="true"  class="cu-btn  bg-white text-green"role="button"aria-disabled="false">同意({{info.agree}}人)</button>
+          <button bindtap="_optionSelect" hover-class="bg-grey"  data-opt="0"  class="cu-btn  bg-white text-green"role="button"aria-disabled="false">同意 <text style="font-size:20rpx">({{info.agree}}人)</text> </button>
         </view>
         <view class="option option2">
-          <button bindtap="_optionSelect" hover-class="bg-grey"  data-option="false" class="cu-btn  bg-white text-red"role="button"aria-disabled="false">反对({{info.against}}人)</button>
+          <button bindtap="_optionSelect" hover-class="bg-grey"  data-opt="-1" class="cu-btn  bg-white text-red" role="button" aria-disabled="false">反对 <text style="font-size:20rpx">({{info.oppose}}人)</text> </button>
         </view>
 
          <view class="option apply">
@@ -87,24 +94,11 @@
       <!-- 场景2 -->
       <view class="scene2" wx:if="{{info.type==2}}">
        
-       <view class="bg-white question">“{{info.name}}”属于哪类垃圾？</view>
+       <view class="bg-white question"><text class="text-black text-bold">“{{info.name}}”</text> 属于哪类垃圾？</view>
 
-       <view class="option">
-          <button bindtap="_optionSelect" hover-class="bg-grey"  data-option="1" class="cu-btn  bg-white text-black"role="button"aria-disabled="false">干垃圾/其他垃圾({{info.garbage1}}人)</button>
+       <view class="option {{index>=1?'option2':''}}" wx:for="{{info.category_votes}}" wx:key="{{key}}">
+          <button bindtap="_optionSelect" hover-class="bg-grey"  data-opt="{{item.category_id}}" class="cu-btn  bg-white {{item.category_id==1?'text-blue':(item.category_id==2?'text-red':(item.category_id==3?'text-brown':(item.category_id==4?'text-black':'')))}}"role="button"aria-disabled="false">{{item.category_name}} <text style="font-size:20rpx">({{item.votes}}人)</text> </button>
         </view>
-         <view class="option option2">
-          <button bindtap="_optionSelect" hover-class="bg-grey"  data-option="2" class="cu-btn  bg-white text-brown"role="button"aria-disabled="false">湿垃圾/易腐垃圾/厨余垃圾({{info.garbage2}}人)</button>
-        </view>
-        <view class="option option2">
-          <button bindtap="_optionSelect" hover-class="bg-grey"  data-option="3" class="cu-btn  bg-white text-red"role="button"aria-disabled="false">有害垃圾({{info.garbage3}}人)</button>
-        </view>
-        <view class="option option2">
-          <button bindtap="_optionSelect" hover-class="bg-grey"  data-option="4" class="cu-btn  bg-white text-blue"role="button"aria-disabled="false">可回收垃圾({{info.garbage4}}人)</button>
-        </view>
-        <view class="option option2">
-          <button bindtap="_optionSelect" hover-class="bg-grey"  data-option="5" class="cu-btn  bg-white text-grey"role="button"aria-disabled="false">非日常生活垃圾({{info.garbage5}}人)</button>
-        </view>
-
 
         <view class="option apply">
           <button open-type="share" hover-class="bg-grey"  class="cu-btn  bg-green text-white"role="button"aria-disabled="false">邀请好友回答</button>
@@ -114,5 +108,32 @@
           <button bindtap="_hideModal" hover-class="bg-grey"  class="cu-btn  bg-white text-black"role="button"aria-disabled="false">取消</button>
         </view>
       </view>
+  </view>
+</view>
+
+<!-- 操作模态框 -->
+<view  bindtap="_hideOptModal" class="cu-modal bottom-modal wx:if='{{optModalShow?'show':''}}' "  >
+  <view catchtap class="cu-dialog cu-dialog-optmenu">
+    <view class="opt-menu-box">
+      <view class="menu-item-box">
+        <button bindtap="_goAddPage" class="menu-item cu-btn bg-white reset-button">
+          <image mode="aspectFit" src="../../images/icon/add.png"></image>
+          <text class="addDictionary-text">丰富词库</text>
+        </button>
+
+        <button bindtap="_appreciate" class="menu-item cu-btn bg-white reset-button">
+          <image mode="aspectFit" src="../../images/icon/money.png"></image>
+          <text>赞赏作者</text>
+        </button>
+
+        <button open-type="contact" class="menu-item cu-btn bg-white reset-button">
+          <image mode="aspectFit" src="../../images/icon/edit.png"></image>
+          <text>优化建议</text>
+        </button>
+      </view>
+      <view bindtap="_hideOptModal"  class="menu-close-btn">
+        关闭
+      </view>
+    </view>
   </view>
 </view>

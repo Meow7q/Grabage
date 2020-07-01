@@ -1,0 +1,57 @@
+<!--pages/add/add.wxml-->
+<cu-custom  isCustom="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">AI垃圾分类小助手</view>
+</cu-custom>
+
+<view class="padding bg-white">
+  <view class="padding bg-grey radius"style="width:100%">
+    <view wx:if="{{q_info.type==1}}">  
+        【{{q_info.name}}】是{{q_info.category_votes.category_name}}吗?
+    </view>
+
+    <view wx:if="{{q_info.type==2}}">  
+        【{{q_info.name}}】属于哪一类垃圾?
+    </view>
+  </view>
+</view>
+
+<form bindsubmit="formSubmit" bindreset="formReset">
+
+	<radio-group class="block margin-top"  name="opt">
+
+    <block wx:if="{{q_info.type==2}}">
+      <view wx:for="{{q_info.category_votes}}" wx:key="{{key}}" class="cu-form-group" data-index="{{index}}" bindtap="_radioSelect">
+        <view class="title">{{item.category_name}} <text style="font-size:20rpx;">({{item.votes}}人认同)</text> </view>
+        <view>
+          <radio  class="{{item.category_id==1?'blue':(item.category_id==2?'red':(item.category_id==3?'brown':(item.category_id==4?'black':'')))}} margin-left-sm" value="{{item.category_id}}" checked="{{radio==index}}"></radio>
+        </view>
+      </view>
+    </block>   
+
+    <block wx:if="{{q_info.type==1}}">
+      <view class="cu-form-group" data-index="-1" bindtap="_radioSelect">
+        <view class="title">同意 <text style="font-size:20rpx;">({{q_info.agree}}人)</text> </view>
+        <view>
+          <radio class="green margin-left-sm" value="0" checked="{{radio==-1}}"></radio>
+        </view>
+      </view>
+
+      <view class="cu-form-group" data-index="-2" bindtap="_radioSelect">
+        <view class="title">反对 <text style="font-size:20rpx;">({{q_info.oppose}}人)</text></view>
+        <view>
+          <radio class="red margin-left-sm" value="-1" checked="{{radio==-2}}"></radio>
+        </view>
+      </view>
+    </block>
+
+	</radio-group>
+
+  <button form-type="submit" class="cu-btn block bg-blue margin-tb-sm lg sub-btn"role="button"aria-disabled="false">
+    <text wx:if="{{loadding}}" class="cuIcon-loading2 iconfont-spin"></text>
+    <text>{{loadding?'提交中...':'提交'}}</text>
+  </button>
+</form>
+
+  <button  open-type="share" class="cu-btn block bg-green margin-tb-sm lg sub-btn"role="button"aria-disabled="false">邀请好友回答</button>
+

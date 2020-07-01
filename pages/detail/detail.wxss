@@ -27,12 +27,7 @@ page{
     color: #ffffff;
     background-image:linear-gradient(20deg, #4da975, #61ad62);
 }
-.cu-custom .cu-bar{
-  /* color: #ffffff;
-  background-color: transparent; */
-  /* background-color: var(--ghostWhite); */
-  /* background-image:url(https://image.weilanwl.com/color2.0/plugin/sylb2244.jpg); */
-}
+
 .head{
   width: 100%;
   height: 466rpx;
@@ -40,7 +35,7 @@ page{
   color: var(--white);
   position: absolute;
   top: 0;
-  z-index: -1;
+  z-index: 2;
 }
 .head .title{
   width: 690rpx;

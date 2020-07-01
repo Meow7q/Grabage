@@ -1,5 +1,5 @@
 <!--pages/add/add.wxml-->
-<cu-custom isBack="{{true}}" >
+<cu-custom  isCustom="{{true}}">
 	<view slot="backText">返回</view>
 	<view slot="content">新增到词库</view>
 </cu-custom>
@@ -10,53 +10,37 @@
   </view>
 </view>
 
-<form>
+<form bindsubmit="formSubmit" bindreset="formReset">
 	<view class="cu-form-group margin-top">
 		<view class="title">垃圾名称</view>
-		<input placeholder="15个字以内"></input>
+		<input placeholder="15个字以内"  name="name" value="{{name}}"></input>
 	</view>
 	<view class="cu-form-group margin-top">
 		<view class="title">分类选择</view>
 	</view>
-	<radio-group class="block">
-		<view class="cu-form-group" data-index="1" bindtap="_radioSelect">
-			<view class="title">干垃圾/其他垃圾</view>
+	<radio-group class="block"  name="category_id">
+
+		<view wx:for="{{categories}}" wx:key="{{key}}" class="cu-form-group" data-index="{{index}}" bindtap="_radioSelect">
+			<view class="title">{{item.category_name}}</view>
 			<view>
-				<radio class="black margin-left-sm" checked="{{radio==1}}"></radio>
+				<radio  class="{{item.category_id==1?'blue':(item.category_id==2?'red':(item.category_id==3?'brown':(item.category_id==4?'black':'')))}} margin-left-sm" value="{{item.category_id}}" checked="{{radio==index}}"></radio>
 			</view>
 		</view>
 
-    <view class="cu-form-group" data-index="2" bindtap="_radioSelect">
-			<view class="title">湿垃圾/厨余垃圾/易腐垃圾</view>
-			<view>
-				<radio class="brown margin-left-sm" checked="{{radio==2}}"></radio>
-			</view>
-		</view>
-
-     <view class="cu-form-group" data-index="3" bindtap="_radioSelect">
-			<view class="title">有害垃圾</view>
-			<view>
-				<radio class="red margin-left-sm" checked="{{radio==3}}"></radio>
-			</view>
-		</view>
-
-    <view class="cu-form-group" data-index="4" bindtap="_radioSelect">
-			<view class="title">可回收物</view>
-			<view>
-				<radio  class="blue margin-left-sm" checked="{{radio==4}}"></radio>
-			</view>
-		</view>
-
-    <view class="cu-form-group" data-index="5" bindtap="_radioSelect">
+    <view class="cu-form-group" data-index="-1" bindtap="_radioSelect">
 			<view class="title">不知道</view>
 			<view>
-				<radio  class="grey margin-left-sm" checked="{{radio==5}}"></radio>
+				<radio class="grey margin-left-sm" value="-1" checked="{{radio==-1}}"></radio>
 			</view>
 		</view>
+
 	</radio-group>
 
   <button form-type="submit" class="cu-btn block bg-blue margin-tb-sm lg sub-btn"role="button"aria-disabled="false">
-    <text class="cuIcon-loading2 iconfont-spin"></text>
-    <text>提交</text>
+    <text wx:if="{{loadding}}" class="cuIcon-loading2 iconfont-spin"></text>
+    <text>{{loadding?'提交中...':'提交'}}</text>
   </button>
 </form>
+
+  <button wx:if="{{showApplyBtn}}" open-type="share" class="cu-btn block bg-green margin-tb-sm lg sub-btn"role="button"aria-disabled="false">邀请好友审核</button>
+

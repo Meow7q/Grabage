@@ -1,4 +1,6 @@
 // pages/lexicon/lexicon.js
+import { lexiconModel } from 'lexicon-model.js';
+var lexiconM = new lexiconModel();
 Page({
 
   /**
@@ -10,20 +12,10 @@ Page({
     info: null,
     //当前所选的物品在数组的index
     index:null,
-    listdata:[
-      { id: 0, nickname: 'a', headimgurl: '', name: '火车', type: 2, type_info: {id:1,name:'干垃圾'}, agree: 0, against: 2, garbage1: 0, garbage2: 0, garbage3: 0, garbage4: 0, garbage5: 0 },
-      { id: 0, nickname: 'a', headimgurl: '', name: '飞机', type: 2, type_info: { id: 1, name: '干垃圾' }, agree: 0, against: 2, garbage1: 0, garbage2: 0, garbage3: 0, garbage4: 0, garbage5: 0 },
-      { id: 0, nickname: 'a', headimgurl: '', name: '香蕉皮', type: 1, type_info: { id: 1, name: '湿垃圾/易腐垃圾/厨余垃圾' }, agree: 0, against: 2, garbage1: 0, garbage2: 0, garbage3: 0, garbage4: 0, garbage5: 0 },
-      { id: 0, nickname: 'a', headimgurl: '', name: '火箭', type: 2, type_info: { id: 1, name: '干垃圾' }, agree: 0, against: 2, garbage1: 0, garbage2: 0, garbage3: 0, garbage4: 0, garbage5: 0 },
-      { id: 0, nickname: 'a', headimgurl: '', name: '鱼骨头', type: 1, type_info: { id: 1, name: '干垃圾' }, agree: 0, against: 2, garbage1: 0, garbage2: 0, garbage3: 0, garbage4: 0, garbage5: 0 },
-      { id: 0, nickname: 'a', headimgurl: '', name: '洗面奶', type: 1, type_info: { id: 1, name: '干垃圾' }, agree: 0, against: 2, garbage1: 0, garbage2: 0, garbage3: 0, garbage4: 0, garbage5: 0 },
-      { id: 0, nickname: 'a', headimgurl: '', name: '火柴', type: 1, type_info: { id: 1, name: '干垃圾' }, agree: 0, against: 2, garbage1: 0, garbage2: 0, garbage3: 0, garbage4: 0, garbage5: 0 },
-      { id: 0, nickname: 'a', headimgurl: '', name: '粉底液', type: 1, type_info: { id: 1, name: '干垃圾' }, agree: 0, against: 2, garbage1: 0, garbage2: 0, garbage3: 0, garbage4: 0, garbage5: 0 },
-      { id: 0, nickname: 'a', headimgurl: '', name: '面膜', type: 1, type_info: { id: 1, name: '干垃圾' }, agree: 0, against: 2, garbage1: 0, garbage2: 0, garbage3: 0, garbage4: 0, garbage5: 0 },
-      { id: 0, nickname: 'a', headimgurl: '', name: '公交卡', type: 2, type_info: { id: 1, name: '干垃圾' }, agree: 0, against: 2, garbage1: 0, garbage2: 0, garbage3: 0, garbage4: 0, garbage5: 0 },
-      { id: 0, nickname: 'a', headimgurl: '', name: '废旧椅子', type: 1, type_info: { id: 1, name: '干垃圾' }, agree: 0, against: 2, garbage1: 0, garbage2: 0, garbage3: 0, garbage4: 0, garbage5: 0 },
-      { id: 0, nickname: 'a', headimgurl: '', name: '纸盒子', type: 1, type_info: { id: 1, name: '干垃圾' }, agree: 0, against: 2, garbage1: 0, garbage2: 0, garbage3: 0, garbage4: 0, garbage5: 0 },
-    ],
+    current_page: 1,
+    total: 0,
+    listdata:[],
+    getMoreLoading: true,
   },
 
   /**
@@ -31,8 +23,9 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      list: this.data.listdata
+      getMoreLoading: this.data.getMoreLoading
     });
+    this._getQuestionList();
   },
 
   /**
@@ -74,19 +67,30 @@ Page({
    * 页面上拉触底事件的处理函数（上拉加载更多）
    */
   onReachBottom: function () {
-    wx.showToast({
-      title: 'more',
-      icon: 'none'
-    })
+    //上拉加载更多
+    this.data.current_page++;
+    this.data.getMoreLoading = true;
+    this.setData({
+      getMoreLoading: this.data.getMoreLoading
+    });
+    this._getQuestionList();
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    let index = this.data.index;
+    let q_info = this.data.listdata[index];
+    console.log(q_info);
+    let title = '【'+q_info.name+'】' + '属于哪一类垃圾?';
+    if (q_info.type == 1) {
+      title = '【' + q_info.name + '】' + '是' + q_info.category_votes.category_name + '吗?'
+    }
     return {
-      title: "纸巾是干垃圾吗？",
-      path: "/pages/index/index"
+      title: title,
+      path: '/pages/answer/answer?q_id=' + q_info.id,
+      imageUrl: wx.getStorageSync('share_img_url'),
     }
   },
 
@@ -115,17 +119,32 @@ Page({
     }
   },
 
+  //答题菜单
   _showModal: function(e) {
     this.setData({
-      modelShow: true
+      modalShow: true
     });
   },
   _hideModal: function(e) {
     this.setData({
-      modelShow: false
+      modalShow: false
     });
   },
-  //判断或选择
+
+  //操作导航菜单
+  _showOptModal: function (e) {
+    this.setData({
+      optModalShow: true
+    });
+  },
+  _hideOptModal: function (e) {
+    this.setData({
+      optModalShow: false
+    });
+  },
+
+  
+  //弹出操作模态框
   _selectOrJudge: function(e){
     let index = e.currentTarget.dataset.index;
     let info = this.data.listdata[index];
@@ -139,14 +158,53 @@ Page({
   
   //选项选择
   _optionSelect: function(e){
-    let option = e.currentTarget.dataset.option;
+    let opt = e.currentTarget.dataset.opt;
     let index = this.data.index;
+    let q_id = this.data.listdata[index].id;
     this.data.listdata.splice(index, 1);
     this._hideModal();
-    this.setData({
-      list: this.data.listdata
+    lexiconM.vote(q_id, opt, (res)=>{
+      console.log(res);
     });
-    console.log(option);
-    console.log(this.data.index);
-  }
+    this.setData({
+      listdata: this.data.listdata
+    });
+
+  },
+
+  //获取列表
+  _getQuestionList: function(){
+    lexiconM.getQuestionList(this.data.current_page, (res)=>{
+      if(!res.status){
+        wx.showToast({
+          title: '网络错误!',
+          icon: 'none'
+        });
+        return false;
+      }
+
+      this.data.current_page = res.data.current_page;
+      this.data.total = res.data.total;
+      this.data.getMoreLoading = this.data.length>20?true:false;
+      this.data.listdata.push.apply(this.data.listdata, res.data.data);
+
+      this.setData({
+        getMoreLoading: this.data.getMoreLoading,
+        listdata: this.data.listdata
+      });
+    });
+  },
+
+  _goAddPage: function(){
+      wx.navigateTo({
+        url: '/pages/add/add',
+      })
+  },
+  _appreciate: function(){
+    wx.previewImage({
+      current: 'https://garbage.meow7.cn//upload/img/appreciate.jpg', // 当前显示图片的http链接
+      urls: ['https://garbage.meow7.cn//upload/img/appreciate.jpg'] // 需要预览的图片http链接列表
+    })
+  },
+
 })

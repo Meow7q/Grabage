@@ -11,6 +11,7 @@
   align-items: center;
   box-sizing: border-box;
   position: relative;
+  padding-bottom: 40rpx;
 } 
 .bg{
   width: 100%;
@@ -44,7 +45,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0,0,0, .4);
+  background: rgba(0,0,0, .35);
   margin-top: 83rpx;
   color: #ffffff;
   z-index: 10;
@@ -68,26 +69,40 @@
     display: flex;
     flex-direction: row;
 }
+.rs-left{
+  display: flex;
+}
 .rs-left image{
   width: 194rpx;
   height: 194rpx;
   border: 2rpx solid #ffffff;
 }
 .rs-right{
+  width: 100%;
+  position: relative;
   margin-left: 20rpx;
   display: flex;
   flex-direction: column;
   justify-content:space-around;
 }
-
+.share-btn{
+  position: absolute;
+  padding: 0;
+  right: 0;
+  top: 0;
+  font-size: 42rpx;
+  background-color: transparent !important;
+  color: #ffffff;
+}
 .rs-cat{
   width: 658rpx;
-  min-height: 250rpx;
+  /* min-height: 250rpx; */
+  min-height: 170rpx;
   padding: 29rpx;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0,0,0, .4);
+  background: rgba(0,0,0, .35);
   margin-top: 83rpx;
   color: #ffffff;
   z-index: 10;
@@ -97,4 +112,27 @@
 }
 .cu-list.menu>.cu-item {
   background-color:   inherit;
+}
+.not-found{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; 
+}
+.addBtn{
+  width: 70%;
+  margin-top: 17rpx;
+}
+.goSearchPage{
+  margin-top: 3rpx;
+  text-align: right;
+  color: #579e77;
+  font-size: 24rpx;
+}
+.keyword{
+  font-size: 47rpx;
+}
+.score{
+  font-size:24rpx;
+  font-weight:300;
 }

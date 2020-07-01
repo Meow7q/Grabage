@@ -4,6 +4,6 @@ class config{
   }
 }
 
-config.requestUrl = 'http://garbage.meow7.cn/api/';
+config.requestUrl = 'https://garbage.meow7.cn/api/';
 
 export {config}

@@ -7,7 +7,9 @@
 <view class="container">
   <view class="mask"></view>
   <view class="content">
-    <view class="logo"></view>
+    <view class="logo">
+        <image mode="aspectFit" src="../../images/icon/logo@1.png"></image>
+    </view>
     <view class="opt">
       <button  class="camera" bindtap="_takePhoto" >
         <image mode="aspectFit" src="../../images/icon/camera.png"></image>
